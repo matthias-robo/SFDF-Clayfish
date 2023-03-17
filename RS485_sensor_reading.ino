@@ -1,19 +1,19 @@
 #include <ModbusMaster.h>
 
-
 ModbusMaster node1;
 ModbusMaster node2;
 ModbusMaster node3;
+
 void setup()
 {
   // use Serial (port 0); initialize Modbus communication baud rate
   Serial.begin(9600);
   Serial3.begin(9600);
+
   node1.begin(1, Serial3);
   node2.begin(2, Serial3);
   node3.begin(3, Serial3);
 }
-
 
 void loop()
 {
@@ -23,6 +23,7 @@ void loop()
   delay(50);
   readDo();
   delay(1000);
+  Serial.println("---------------------------");
 }
 
 // read hex return from serial, used when trying to reverse find sent hex command from there software
