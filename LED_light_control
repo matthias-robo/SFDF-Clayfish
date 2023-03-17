@@ -1,0 +1,95 @@
+//LED Settings
+int LED_stat = 0;
+long LED_prev_mills = 0;
+int LED_R = 2;
+int LED_Y = 3;
+int LED_G = 4;
+
+
+void setup ()
+{
+    Serial.begin (9600);
+    for (int i = 2; i <= 4; i++)
+    {
+        pinMode (i, OUTPUT);
+    }
+    LED_ChangeStatus ('O');
+    delay (500);
+    LED_ChangeStatus ('G');
+    delay (500);
+    LED_ChangeStatus ('Y');
+    delay (500);
+    LED_ChangeStatus ('R');
+    delay (500);
+    LED_ChangeStatus ('O');
+}
+
+void loop ()
+{
+    LED_Blink ('Y',1000);
+}
+
+void LED_ChangeStatus (char LED_Color)
+{
+    // Convert lowercase letter to uppercase letter
+    if (LED_Color >= 'a' && LED_Color <= 'z')
+    {
+        LED_Color -= 32;
+    }
+
+    // Set switch case for LED status
+    switch (LED_Color)
+    {
+        case 'O':
+            digitalWrite (LED_R, !HIGH);
+            digitalWrite (LED_Y, !HIGH);
+            digitalWrite (LED_G, !HIGH);
+            //Serial.println ("Off");
+            LED_stat = 0;   
+            break;
+        case 'R':
+            digitalWrite (LED_R, HIGH);
+            digitalWrite (LED_Y, !HIGH);
+            digitalWrite (LED_G, !HIGH);
+            // Serial.println ("Red LED");
+            LED_stat = 1;
+            break;
+        case 'Y':
+            digitalWrite (LED_R, !HIGH);
+            digitalWrite (LED_Y, HIGH);
+            digitalWrite (LED_G, !HIGH);
+            // Serial.println ("Yellow LED");
+            LED_stat = 2;
+            break;
+        case 'G':
+            digitalWrite (LED_R, !HIGH);
+            digitalWrite (LED_Y, !HIGH);
+            digitalWrite (LED_G, HIGH);
+            // Serial.println ("Green LED");
+            LED_stat = 3;
+            break;
+        default:
+            Serial.println ("ERROR");
+            LED_stat = 99;
+            break;
+    };
+}
+
+int LED_Blink (char LED_Color, long interval_time)
+{
+    unsigned long cur_millis = millis();
+
+    if (cur_millis - LED_prev_mills > interval_time)
+    {
+       LED_prev_mills = cur_millis;
+
+       if (LED_stat == 0 || LED_stat == 99)
+       {
+            LED_ChangeStatus (LED_Color);
+       } 
+       else
+       {
+            LED_ChangeStatus ('O');
+       }
+    }
+}

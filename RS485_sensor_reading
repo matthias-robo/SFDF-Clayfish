@@ -1,6 +1,5 @@
 #include <ArduinoModbus.h>
 #include <ModbusMaster.h>
-#include <SoftwareSerial.h>
 
 
 ModbusMaster node1;
