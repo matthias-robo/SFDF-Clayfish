@@ -1,0 +1,5 @@
+{
+    "files.associations": {
+        "esp32_rs485_sensor": "cpp"
+    }
+}

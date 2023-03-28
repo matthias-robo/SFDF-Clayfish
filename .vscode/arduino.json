@@ -3,5 +3,5 @@
     "configuration": "PartitionScheme=default,FlashMode=qio,FlashFreq=80,UploadSpeed=921600,DebugLevel=none",
     "board": "esp32:esp32:esp32wrover",
     "programmer": "arduino:avrispmkii",
-    "sketch": "ESP32_LED_Control.ino"
+    "sketch": "esp_now.ino"
 }
