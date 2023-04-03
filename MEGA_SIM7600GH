@@ -1,0 +1,38 @@
+#include <ModbusMaster.h>
+#define RXD2 16
+#define TXD2 17
+
+
+void setup()
+{
+  // use Serial (port 0); initialize Modbus communication baud rate
+  Serial.begin(115200);
+  Serial3.begin(115200);
+
+}
+
+void loop() 
+{ 
+
+    if (Serial.available() > 0) {
+        Serial.print(">");
+        delay(100);
+        while ( Serial.available() ) {
+            char ch = Serial.read();
+            Serial.print(ch);
+            Serial3.print(ch);
+        }
+    }
+    if (Serial3.available() > 0) {
+        Serial.print(":");
+        delay(10);
+        while ( Serial3.available() ) {
+            char ch = Serial3.read();
+            if ( ch ) {
+            Serial.print(ch);
+            }
+        }
+
+    }
+
+}

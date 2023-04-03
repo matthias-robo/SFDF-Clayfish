@@ -1,0 +1,96 @@
+#define led_r 33
+#define led_y 26
+#define led_g 27
+
+int led_stat = 0;
+long led_prev_mills = 0;
+
+void setup ()
+{
+    Serial.begin (9600);
+
+    pinMode (led_r, OUTPUT);
+    pinMode (led_y, OUTPUT);
+    pinMode (led_g, OUTPUT);
+    
+    LED_ChangeStatus ('o');
+    delay (500);
+    LED_ChangeStatus ('g');
+    delay (500);
+    LED_ChangeStatus ('y');
+    delay (500);
+    LED_ChangeStatus ('r');
+    delay (500);
+    LED_ChangeStatus ('o');
+}
+
+void loop ()
+{
+    LED_Blink ('g',1000);
+}
+
+void LED_ChangeStatus (char led_color)
+{
+    // Convert lowercase letter to uppercase letter
+    // if (led_color >= 'a' && led_color <= 'z')
+    // {
+    //     led_color += 32;
+    // }
+
+    // Set switch case for LED status
+    switch (led_color)
+    {
+        case 'o':
+            digitalWrite (led_r, !HIGH);
+            digitalWrite (led_y, !HIGH);
+            digitalWrite (led_g, !HIGH);
+            //Serial.println ("Off");
+            led_stat = 0;   
+            break;
+        case 'r':
+            digitalWrite (led_r, HIGH);
+            digitalWrite (led_y, !HIGH);
+            digitalWrite (led_g, !HIGH);
+            // Serial.println ("Red LED");
+            led_stat = 1;
+            break;
+        case 'y':
+            digitalWrite (led_r, !HIGH);
+            digitalWrite (led_y, HIGH);
+            digitalWrite (led_g, !HIGH);
+            // Serial.println ("Yellow LED");
+            led_stat = 2;
+            break;
+        case 'g':
+            digitalWrite (led_r, !HIGH);
+            digitalWrite (led_y, !HIGH);
+            digitalWrite (led_g, HIGH);
+            // Serial.println ("Green LED");
+            led_stat = 3;
+            break;
+        default:
+            Serial.println ("ERROR");
+            led_stat = 99;
+            break;
+    };
+}
+
+int LED_Blink (char led_color, long interval_time)
+{
+    unsigned long cur_millis = millis();
+
+    if (cur_millis - led_prev_mills > interval_time)
+    {
+       led_prev_mills = cur_millis;
+
+       if (led_stat == 0)
+       {
+            LED_ChangeStatus (led_color);
+       } 
+       else
+       {
+            LED_ChangeStatus ('o');
+       }
+    }
+}
+
